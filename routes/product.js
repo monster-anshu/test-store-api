@@ -8,11 +8,11 @@ router.post("/", fetchAdmin, async (req, res) => {
   const { productName, productPrice, productID } = req.body;
 
   if (!productName || !productPrice || !productID)
-    return res.status(400).send({ err: "Something is missing" });
+    return res.status(400).json({ err: "Something is missing" });
   const item = await Products.findOne({ productID: productID });
 
   if (item) {
-    return res.status(400).send({ err: "Product ID already exist" });
+    return res.status(400).json({ err: "Product ID already exist" });
   }
 
   try {
@@ -23,11 +23,11 @@ router.post("/", fetchAdmin, async (req, res) => {
         productID: productID,
       },
       () => {
-        res.status(200).send({ msg: "Product Added" });
+        res.status(200).json({ msg: "Product Added" });
       }
     );
   } catch (err) {
-    res.status(500).send({ err: "Server down" });
+    res.status(500).json({ err: "Server down" });
   }
 });
 
@@ -38,16 +38,16 @@ router.delete("/:id", fetchAdmin, async (req, res) => {
       productID: ID,
     });
     if (!Product)
-      return res.status(404).send({
+      return res.status(404).json({
         err: "Product Not found !",
       });
 
     await Products.findOneAndDelete({
       productID: ID,
     });
-    res.status(200).send({ msg: "Product Deleted" });
+    res.status(200).json({ msg: "Product Deleted" });
   } catch (err) {
-    res.status(500).send({ err: "Server down" });
+    res.status(500).json({ err: "Server down" });
   }
 });
 router.delete("/id/:id", fetchAdmin, async (req, res) => {
@@ -55,14 +55,14 @@ router.delete("/id/:id", fetchAdmin, async (req, res) => {
   try {
     const Product = await Products.findById(ID);
     if (!Product)
-      return res.status(404).send({
+      return res.status(404).json({
         err: "Product Not found !",
       });
 
     await Products.findByIdAndDelete(ID);
-    res.status(200).send({ msg: "Product Deleted" });
+    res.status(200).json({ msg: "Product Deleted" });
   } catch (err) {
-    res.status(404).send({
+    res.status(404).json({
       err: "Product ID is not Valid !",
     });
   }
@@ -85,11 +85,11 @@ router.put("/id/:id", fetchAdmin, async (req, res) => {
     }
 
     const Product = await Products.findByIdAndUpdate(ID);
-    if (!Product) return res.status(404).send({ err: "Product Not found !" });
+    if (!Product) return res.status(404).json({ err: "Product Not found !" });
     await Products.findByIdAndUpdate(ID, { $set: newProduct }, { new: true });
-    res.status(200).send({ msg: "Product Updated" });
+    res.status(200).json({ msg: "Product Updated" });
   } catch (err) {
-    res.status(500).send({ err: "Server down" });
+    res.status(500).json({ err: "Server down" });
   }
 });
 router.put("/:id", fetchAdmin, async (req, res) => {
@@ -109,42 +109,42 @@ router.put("/:id", fetchAdmin, async (req, res) => {
     }
 
     const Product = await Products.findOne({ productID: ID });
-    if (!Product) return res.status(404).send({ err: "Product Not found !" });
+    if (!Product) return res.status(404).json({ err: "Product Not found !" });
     await Products.findOneAndUpdate(
       { productID: ID },
       { $set: newProduct },
       { new: true }
     );
-    res.status(200).send({ msg: "Product Updated" });
+    res.status(200).json({ msg: "Product Updated" });
   } catch (err) {
-    res.status(500).send({ err: "Server down" });
+    res.status(500).json({ err: "Server down" });
   }
 });
 
 router.get("/admin/", fetchAdmin, async (req, res) => {
   try {
     const Product = await Products.find().select("-__v");
-    res.status(200).send(Product);
+    res.status(200).json(Product);
   } catch (error) {
-    res.status(500).send({ err: "Server down" });
+    res.status(500).json({ err: "Server down" });
   }
 });
 router.get("/admin/:id", fetchAdmin, async (req, res) => {
   const ID = req.params.id;
   try {
     const Product = await Products.find({ productID: ID }).select("-__v");
-    res.status(200).send(Product);
+    res.status(200).json(Product);
   } catch (error) {
-    res.status(500).send({ err: "Server down" });
+    res.status(500).json({ err: "Server down" });
   }
 });
 
 router.get("/", fetchUser, async (req, res) => {
   try {
     const Product = await Products.find().select("-__v");
-    res.status(200).send(Product);
+    res.status(200).json(Product);
   } catch (error) {
-    res.status(500).send({ err: "Server down" });
+    res.status(500).json({ err: "Server down" });
   }
 });
 
@@ -154,9 +154,9 @@ router.get("/:id", fetchUser, async (req, res) => {
   const ID = req.params.id;
   try {
     const Product = await Products.find({ productID: ID }).select("-__v");
-    res.status(200).send(Product);
+    res.status(200).json(Product);
   } catch (error) {
-    res.status(500).send({ err: "Server down" });
+    res.status(500).json({ err: "Server down" });
   }
 });
 

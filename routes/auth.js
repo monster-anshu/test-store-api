@@ -12,7 +12,7 @@ const JWT_SECRECT = "THIS_IS_SECRECT";
 router.post("/admin/login", async (req, res) => {
   const { username, password } = req.body;
   if (!username || !password)
-    return res.status(400).send({ err: "Something is missing" });
+    return res.status(400).json({ err: "Something is missing" });
 
   try {
     const admin = await Admin.findOne({
@@ -20,7 +20,7 @@ router.post("/admin/login", async (req, res) => {
       password: password,
     });
     if (!admin) {
-      return res.status(401).send({ err: "Admin not found" });
+      return res.status(401).json({ err: "Admin not found" });
     } else {
       const data = {
         admin: {
@@ -28,10 +28,10 @@ router.post("/admin/login", async (req, res) => {
         },
       };
       const authToken = await JWT.sign(data, JWT_SECRECT);
-      return res.status(200).send({ authToken: authToken });
+      return res.status(200).json({ authToken: authToken });
     }
   } catch (err) {
-    res.send({ err: "Server down" }).status(500);
+    res.json({ err: "Server down" }).status(500);
   }
 });
 
@@ -42,26 +42,27 @@ router.post("/admin/getadmin", fetchAdmin, async (req, res) => {
     const admin = await Admin.findById(adminId).select("-password");
 
     if (admin === null) {
-      return res.status(404).send({ err: "Admin not found" });
+      return res.status(404).json({ err: "Admin not found" });
     }
-    res.status(200).send(admin);
+    res.status(200).json(admin);
   } catch (err) {
-    res.status(500).send({ err: "Server down" });
+    res.status(500).json({ err: "Server down" });
   }
 });
 
 router.post("/login", async (req, res) => {
   const { username, password } = req.body;
   if (!username || !password)
-    return res.status(400).send({ err: "Something is missing" });
+    return res.status(400).json({ err: "Something is missing" });
 
   try {
+    console.log(username,password)
     const user = await User.findOne({
       username: username,
       password: password,
     });
     if (!user) {
-      return res.status(401).send({ err: "User not found" });
+      return res.status(401).json({ err: "User not found" });
     } else {
       const data = {
         user: {
@@ -69,10 +70,10 @@ router.post("/login", async (req, res) => {
         },
       };
       const authToken = await JWT.sign(data, JWT_SECRECT);
-      return res.status(200).send({ authToken: authToken });
+       res.status(200).json({ authToken: authToken });
     }
   } catch (err) {
-    res.send({ err: "Server down" }).status(500);
+    res.status(500).json({ err: "Server down" });
   }
 });
 router.post("/getuser", fetchUser, async (req, res) => {
@@ -81,11 +82,11 @@ router.post("/getuser", fetchUser, async (req, res) => {
     const user = await User.findById(userID).select("-password");
 
     if (user === null) {
-      return res.status(404).send({ err: "Admin not found" });
+      return res.status(404).json({ err: "Admin not found" });
     }
-    res.status(200).send(user);
+    res.status(200).json(user);
   } catch (err) {
-    res.status(500).send({ err: "Server down" });
+    res.status(500).json({ err: "Server down" });
   }
 });
 module.exports = router;
