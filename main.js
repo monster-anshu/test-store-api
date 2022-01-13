@@ -10,7 +10,7 @@ app.use(express.json());
 app.use("/api/product", require("./routes/product"));
 app.use("/api/auth/", require("./routes/auth"));
 app.get("/", (req, res) => {
-  res.json(
+  res.send(
     `<h1>For more information of this api go to ${ProjectURI}  or <a href=${ProjectURI} target=_"blank" >Click Here</a></h1>`
   );
 });
