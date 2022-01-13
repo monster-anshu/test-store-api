@@ -4,7 +4,7 @@ require("dotenv").config();
 const express = require("express");
 const connectToMongo = require("./DB/DB");
 const app = express();
-const PORT = process.env.PORT || 5000 ;
+const PORT = process.env.PORT ;
 connectToMongo();
 app.use(express.json());
 app.use("/api/product", require("./routes/product"));
