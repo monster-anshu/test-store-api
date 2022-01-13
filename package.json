@@ -4,7 +4,8 @@
   "description": "This rest api is developed by Himanshu Gunwant for assignment for Internship",
   "main": "main.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start" : "node main.js"
   },
   "author": "Himanshu Gunwant",
   "license": "ISC",
