@@ -7,9 +7,9 @@
 - A user can see all products listed with their prices and name 
 - A user can get product detail by id also 
 
-## Useses and end points 
+## Uses and end-points 
 
-To install run following commands :
+To install run following commands or paste in terminal :
 ```bash
 git clone https://github.com/monster-anshu/Store-Api.git
 cd Store-Api
@@ -37,7 +37,7 @@ npm start
 | :--- | :----: | ---: |
 | POST | localhost/api/auth/login       | Login and get authentication token  |
 | POST | localhost/api/auth/getuser       | Get user deatails  |
-| GET | localhost/api/product/id/      | Get all product |
+| GET | localhost/api/product/      | Get all product |
 | GET | localhost/api/product/:id    | Get product By Product ID |
 
 - Localhost can be changed according to the users need 
